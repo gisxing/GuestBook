@@ -12,9 +12,36 @@
         padding: 9px 0;
       }
     </style>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+function strToJson(str){  
+    return JSON.parse(str);  
+}  
+
+function render_book(data) {
+
+	$("#guest_book_content").html(data);
+}
+
+	$("#book_submit").click(function(){
+	       $.post("/send_ajax",
+			{
+				name: $("#name").val(),
+				msg: $("#msg").val()
+			},
+			function(data, status){
+				//json_data = strToJson(data);
+				//alert(json_data["name"]);
+				render_book(data);
+		});
+	});
+
+});
+</script>
 </head>
 <body>
-
+{{title}}
 <div class="container-fluid">
 
     <div class="row-fluid">
@@ -22,19 +49,17 @@
         <div class="span3">
           
           	<div class="sidebar-nav">
-        	<h1>Jean's Guestbook</h1>
+        	<h1>Guestbook total ajax!</h1>
 
-			<form action="/send" method="post" class="form-horizontal">
 			<div class="control-group">
-    		<input type="input" name="name" placeholder=" Your name…"/>
+    		<input id="name" type="input" name="name" placeholder=" Your name…"/>
 			</div>
    			<div class="control-group">
-    		<textarea rows="3" name="msg" placeholder="Say something…" /></textarea>
+    		<textarea id="msg" rows="3" name="msg" placeholder="Say something…" /></textarea>
 			</div>
    			<div class="control-group">
-   			<button type="submit" class="btn btn-info">Submit</button>
+   			<button type="button" class="btn btn-info" id="book_submit">Submit</button>
    			</div>
-			</form>  	
 
          	</div><!--/.well -->
         
@@ -42,7 +67,7 @@
 
         <div class="span9">
 
-        	<div class="well">
+        	<div class="well" id="guest_book_content">
 			{{data}}
 			</div>	
 

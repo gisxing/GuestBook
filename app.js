@@ -27,6 +27,7 @@ app.configure(function(){
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 
+
 });
 
 app.configure('development', function(){
@@ -38,6 +39,7 @@ app.configure('development', function(){
 app.get('/', routes.index);
 
 app.post('/send', routes.send);
+app.post('/send_ajax', routes.send_ajax);
 
 app.get('/users', user.list);
 

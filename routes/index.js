@@ -27,7 +27,8 @@ exports.send = function(req, res){
 
 	var name = req.body.name,
 		msg = req.body.msg,
-		str = "<p class='lead'><i class='icon-chevron-right'></i><strong>" + name + "</strong> : " + msg + "</p>";
+		req_ip = req.header('x-real-ip') || req.connection.remoteAddress,
+		str = "<p class='lead'><i class='icon-chevron-right'></i><strong>" + name + "</strong>@"+ req_ip +": " + msg + "</p>";
 
 	fs.open("./public/data", "a", 666, function(e, id){
 		fs.write(id, str, null, "utf8", function(){
